@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>fake star trek</title>
+		<script src="https://cdn.jsdelivr.net/npm/vue@2.7.14"></script>
+		<style>
+/*			@font-face {font-family:'msx';src: url('./msx.ttf') format('truetype');}*/
+			* {margin:0;padding:0;box-sizing:border-box}
+			body {background-color:#0d080d;position:fixed;top:0;left:0;width:100%;height:100%;}
+			#app {position:absolute;top:0;left:0;width:100%;height:100%;background-image:url('./bar.png');background-position:center;background-repeat:no-repeat;}
+			.overlay {position:absolute;top:0;left:0;width:100%;height:100%;}
+			.captionsOut {position:absolute;bottom:16px;left:0;width:100%;height:calc(16px * 11 - 1px);overflow:hidden;}
+			.captions {display:flex;flex-direction:column;position:absolute;bottom:0;width:100%;}
+				.captions div {margin:16px 16px 0;line-height:16px;}
+					.captions div span {color:#fff9e4;font-family:monospace;font-size:14px;-webkit-font-smoothing:none;background-color:#0d080d;cursor:default;}
+			.logo {position:absolute;top:16px;left:16px;right:16px;font-size:24px;font-family:monospace;-webkit-font-smoothing:none;line-height:48px;color:#fbdf9b;
+				font-style:italic;text-shadow:1px 1px 0 #0d080d;background-color:#4f2b24;padding:2px 8px;text-align:center;letter-spacing:4px;border:1px solid #0d080d;}
+			.charLeft {position:absolute;top:72px;left:0;}
+			.charRight {position:absolute;top:72px;right:0;}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<div class="overlay"></div>
+
+			<!-- <div class="logo">"Another Night at Quark's"</div> -->
+
+			<img :src="'res/' + imageLeft + '.png'" class="charLeft" :style="'opacity:' + imageLeftOpacity" />
+			<img v-if="imageRight" :src="'res/' + imageRight + '.png'" class="charRight" :style="'opacity:' + imageRightOpacity" />
+
+			<div class="captionsOut">
+				<div class="captions" v-html="script"></div>
+			</div>
+		</div>
+		<script>
+			//backdrop-filter:blur(6px) grayscale(67%) brightness(67%);
+
+			const app = new Vue({
+				el: '#app',
+				data: {
+					script: ``,
+					imageLeft: 'quark',
+					imageLeftOpacity: 1,
+					imageRight: false,
+					imageRightOpacity: 1,
+				}
+			})
+
+		</script>
+	</body>
+</html>
