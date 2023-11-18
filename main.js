@@ -41,7 +41,8 @@ const chars = {
     	when he saved his life from a Jem'Hadar.`,
   	icebreakers: [
   		`want to know how the war effort goes`,
-  		`want to know about any cooking recipes`
+  		`want to know about any cooking recipes`,
+  		`want to know a story about growing up in New Orleans`
   	]
   },
   bashir: {
@@ -52,8 +53,9 @@ const chars = {
     	become jealous of Jadzia and Worf's marriage, and even more jealous and upset after they announced that they wanted to have a baby.`,
   	icebreakers: [
   		`want to hear about any rumors on DS9`,
-  		`have a business proposition`,
-  		`want to know how things are in the infirmary`
+  		// `have a business proposition`,
+  		`want to know how things are in the infirmary`,
+  		`want to know if there are any exotic medical conferences coming up`
   	]
   },
   obrien: {
@@ -63,7 +65,8 @@ const chars = {
   	icebreakers: [
   		`need the holosuites fixed`,
   		`need the replicator fixed`,
-  		`want to know how Rom is doing`
+  		`want to know how Rom is doing in engineering`,
+  		`want to know a story about growing up in Ireland`
   	]
   },
   garak: {
@@ -75,7 +78,8 @@ const chars = {
   	icebreakers: [
   		`want to hear about any rumors on DS9`,
   		`want to hear about any rumors on Cardassia`,
-  		`have a business proposition`
+  		// `have a business proposition`,
+  		`want to know a story about growing up on Cardassia`
   	]
   },
   kira: {
@@ -86,7 +90,9 @@ const chars = {
   		influenced by the sexist attitude of Ferengi toward females. She was not beyond taking advantage of his connections and unique skills, however.`,
   	icebreakers: [
   		`want to hear about any rumors on DS9`,
-  		`want to know how things are going on Bajor`
+  		`want to know how the war effort goes`,
+  		`want to know how things are going on Bajor`,
+  		`want to know a story about growing up during the occupation of Bajor`
   	]
   },
   jadzia: {
@@ -97,8 +103,9 @@ const chars = {
   		romantic feelings.`,
   	icebreakers: [
   		`want to hear about any rumors on DS9`,
-  		`have a business proposition`,
-  		`want to know how Worf is doing`
+  		// `have a business proposition`,
+  		`want to know how Worf is doing`,
+  		`want to know a story from one of Dax's previous hosts`
   	]
   }
 },
@@ -119,7 +126,7 @@ const askBot = async opts => {
 
   if(opts.char){
     let messageText = `You are ${chars[opts.char].name}. You are ${chars[opts.char].description}. You are speaking in character and replying as yourself. 
-			You are in a good mood and trying to be funny. 
+			You are in a good mood and trying to be funny. Do not talk about Tongo or Dabo. 
     	Keep your reply short and direct. Stay on topic. Try not to repeat anything that was just said to you.`
     if(opts.first) messageText += ` You just sat down at the bar and are interested in the conversation.`
   	else messageText += ` You have been chatting with ${chars[opts.asker].name} for a bit, do not mention their name in your reply.`
@@ -189,16 +196,13 @@ const init = async () => {
     	await new Promise(e => setTimeout(e, 1000))
 
 			contents.executeJavaScript('app.script += `<div><span>' + chars[asker].name + ': </span>`')
-			let icebreaker = ``
-
-			icebreaker = `have an idea for a business collaboration`
 
 		  const icebreakerAnswer = await openai.chat.completions.create({
 		  	messages: [
 			  	{
 			  		role: 'system',
 			  		content: `You are ${chars[asker].name}. You are ${chars[asker].description}. You are speaking in character and replying as yourself. 
-			  			You are in a good mood and trying to be funny. 
+			  			You are in a good mood and trying to be funny. Do not talk about Tongo or Dabo. 
 			  			${chars[askee].name} has come to your bar and you ${chars[askee].icebreakers[Math.floor(Math.random() * chars[askee].icebreakers.length)]}. 
 			  			Do not introduce yourself. What is the first thing you say? Do not use quotations in your response. Stay on topic. Be direct.`
 			  	}
